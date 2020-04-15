@@ -6,7 +6,6 @@ static FAAD_SOURCES: &'static [&'static str] = &[
     "common.c",
     "decoder.c",
     "drc.c",
-    "drm_dec.c",
     "error.c",
     "filtbank.c",
     "hcr.c",
@@ -34,9 +33,6 @@ static FAAD_SOURCES: &'static [&'static str] = &[
     "sbr_syntax.c",
     "sbr_tf_grid.c",
     "specrec.c",
-    "ssr.c",
-    "ssr_fb.c",
-    "ssr_ipqf.c",
     "syntax.c",
     "tns.c",
 ];
