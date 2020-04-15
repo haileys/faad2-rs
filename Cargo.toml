@@ -1,6 +1,6 @@
 [package]
 name = "faad2"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["Hailey Somerville <hailey@hailey.lol>"]
 edition = "2018"
 license = "GPL-2.0"
