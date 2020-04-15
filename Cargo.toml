@@ -4,6 +4,9 @@ version = "0.0.0"
 authors = ["Charlie Somerville <charlie@charlie.bz>"]
 edition = "2018"
 license = "GPL-2.0"
+description = "AAC decoding library binding to libfaad2"
+homepage = "https://github.com/charliesome/faad2-rs"
+repository = "https://github.com/charliesome/faad2-rs"
 
 [dependencies]
-faad2-sys = { path = "faad2-sys" }
+faad2-sys = { version = "0.1.0", path = "faad2-sys" }
