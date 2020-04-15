@@ -1,11 +1,11 @@
 [package]
-name = "libfaad2-sys"
+name = "faad2-sys"
 version = "0.0.0"
 authors = ["Charlie Somerville <charlie@charlie.bz>"]
 edition = "2018"
+license = "GPL-2.0"
 
 [dependencies]
 
 [build-dependencies]
-bindgen = "0.53"
 cc = "1.0"

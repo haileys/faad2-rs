@@ -1,11 +1,9 @@
 [package]
-name = "libfaad2-rs"
+name = "faad2"
 version = "0.0.0"
 authors = ["Charlie Somerville <charlie@charlie.bz>"]
 edition = "2018"
+license = "GPL-2.0"
 
 [dependencies]
-libfaad2-sys = { path = "libfaad2-sys" }
-
-# [build-dependencies]
-# bindgen = "0.53"
+faad2-sys = { path = "faad2-sys" }
