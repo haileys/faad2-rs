@@ -1,0 +1,3 @@
+[submodule "libfaad2-sys/faad2"]
+	path = libfaad2-sys/faad2
+	url = https://github.com/knik0/faad2

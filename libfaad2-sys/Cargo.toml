@@ -1,0 +1,11 @@
+[package]
+name = "libfaad2-sys"
+version = "0.0.0"
+authors = ["Charlie Somerville <charlie@charlie.bz>"]
+edition = "2018"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.53"
+cc = "1.0"
