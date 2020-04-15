@@ -1,76 +1,82 @@
-use std::os::raw::{c_char, c_int, c_long, c_uchar, c_ushort, c_ulong, c_void};
+pub use std::os::raw::{c_char, c_int, c_long, c_uchar, c_ushort, c_ulong, c_void};
 
-type NeAACDecHandle = *mut c_void;
+pub type NeAACDecHandle = *mut c_void;
+
+pub const FAAD_FMT_16BIT: c_uchar = 1;
+pub const FAAD_FMT_24BIT: c_uchar = 2;
+pub const FAAD_FMT_32BIT: c_uchar = 3;
+pub const FAAD_FMT_FLOAT: c_uchar = 4;
+pub const FAAD_FMT_DOUBLE: c_uchar = 5;
 
 #[repr(C)]
 #[allow(non_snake_case)]
 pub struct mp4AudioSpecificConfig {
     /* Audio Specific Info */
-    objectTypeIndex: c_uchar,
-    samplingFrequencyIndex: c_uchar,
-    samplingFrequency: c_ulong,
-    channelsConfiguration: c_uchar,
+    pub objectTypeIndex: c_uchar,
+    pub samplingFrequencyIndex: c_uchar,
+    pub samplingFrequency: c_ulong,
+    pub channelsConfiguration: c_uchar,
 
     /* GA Specific Info */
-    frameLengthFlag: c_uchar,
-    dependsOnCoreCoder: c_uchar,
-    coreCoderDelay: c_ushort,
-    extensionFlag: c_uchar,
-    aacSectionDataResilienceFlag: c_uchar,
-    aacScalefactorDataResilienceFlag: c_uchar,
-    aacSpectralDataResilienceFlag: c_uchar,
-    epConfig: c_uchar,
+    pub frameLengthFlag: c_uchar,
+    pub dependsOnCoreCoder: c_uchar,
+    pub coreCoderDelay: c_ushort,
+    pub extensionFlag: c_uchar,
+    pub aacSectionDataResilienceFlag: c_uchar,
+    pub aacScalefactorDataResilienceFlag: c_uchar,
+    pub aacSpectralDataResilienceFlag: c_uchar,
+    pub epConfig: c_uchar,
 
-    sbr_present_flag: c_char,
-    forceUpSampling: c_char,
-    downSampledSBR: c_char,
+    pub sbr_present_flag: c_char,
+    pub forceUpSampling: c_char,
+    pub downSampledSBR: c_char,
 }
 
 #[repr(C)]
 #[allow(non_snake_case)]
 pub struct NeAACDecConfiguration {
-    defObjectType: c_uchar,
-    defSampleRate: c_ulong,
-    outputFormat: c_uchar,
-    downMatrix: c_uchar,
-    useOldADTSFormat: c_uchar,
-    dontUpSampleImplicitSBR: c_uchar,
+    pub defObjectType: c_uchar,
+    pub defSampleRate: c_ulong,
+    pub outputFormat: c_uchar,
+    pub downMatrix: c_uchar,
+    pub useOldADTSFormat: c_uchar,
+    pub dontUpSampleImplicitSBR: c_uchar,
 }
 
 #[repr(C)]
 #[allow(non_snake_case)]
 pub struct NeAACDecFrameInfo
 {
-    bytesconsumed: c_ulong,
-    samples: c_ulong,
-    channels: c_uchar,
-    error: c_uchar,
-    samplerate: c_ulong,
+    pub bytesconsumed: c_ulong,
+    pub samples: c_ulong,
+    pub channels: c_uchar,
+    pub error: c_uchar,
+    pub samplerate: c_ulong,
 
     /* SBR: 0: off, 1: on; upsample, 2: on; downsampled, 3: off; upsampled */
-    sbr: c_uchar,
+    pub sbr: c_uchar,
 
     /* MPEG-4 ObjectType */
-    object_type: c_uchar,
+    pub object_type: c_uchar,
 
     /* AAC header type; MP4 will be signalled as RAW also */
-    header_type: c_uchar,
+    pub header_type: c_uchar,
 
     /* multichannel configuration */
-    num_front_channels: c_uchar,
-    num_side_channels: c_uchar,
-    num_back_channels: c_uchar,
-    num_lfe_channels: c_uchar,
-    channel_position: [c_uchar; 64],
+    pub num_front_channels: c_uchar,
+    pub num_side_channels: c_uchar,
+    pub num_back_channels: c_uchar,
+    pub num_lfe_channels: c_uchar,
+    pub channel_position: [c_uchar; 64],
 
     /* PS: 0: off, 1: on */
-    ps: c_uchar,
+    pub ps: c_uchar,
 }
 
 extern "C" {
     pub fn NeAACDecGetErrorMessage(
         errcode: c_uchar,
-    ) -> *const c_uchar;
+    ) -> *const c_char;
 
     pub fn NeAACDecGetCapabilities() -> c_ulong;
 
@@ -78,11 +84,11 @@ extern "C" {
 
     pub fn NeAACDecGetCurrentConfiguration(
         decoder: NeAACDecHandle,
-    ) -> *const NeAACDecConfiguration;
+    ) -> *mut NeAACDecConfiguration;
 
     pub fn NeAACDecSetConfiguration(
         decoder: NeAACDecHandle,
-        config: *const NeAACDecConfiguration,
+        config: *mut NeAACDecConfiguration,
     ) -> c_uchar;
 
     /* Init the library based on info from the AAC file (ADTS/ADIF) */
@@ -97,7 +103,7 @@ extern "C" {
     /* Init the library using a DecoderSpecificInfo */
     pub fn NeAACDecInit2(
         decoder: NeAACDecHandle,
-        buffer: *mut c_uchar,
+        buffer: *const c_uchar,
         SizeOfDecoderSpecificInfo: c_ulong,
         samplerate: *mut c_ulong,
         channels: *mut c_uchar,
@@ -122,14 +128,14 @@ extern "C" {
     pub fn NeAACDecDecode(
         decoder: NeAACDecHandle,
         hInfo: *mut NeAACDecFrameInfo,
-        buffer: *mut c_uchar,
+        buffer: *const c_uchar,
         buffer_size: c_ulong,
     ) -> *mut c_void;
 
     pub fn NeAACDecDecode2(
         decoder: NeAACDecHandle,
         hInfo: *mut NeAACDecFrameInfo,
-        buffer: *mut c_uchar,
+        buffer: *const c_uchar,
         buffer_size: c_ulong,
         sample_buffer: *mut *mut c_void,
         sample_buffer_size: c_ulong,
