@@ -1,6 +1,3 @@
-use std::env;
-use std::path::PathBuf;
-
 static FAAD_SOURCE_DIR: &'static str = "faad2/libfaad";
 
 static FAAD_SOURCES: &'static [&'static str] = &[
@@ -54,8 +51,6 @@ fn sources() -> Vec<String> {
 }
 
 fn main() {
-    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
-
     for src in sources() {
         // Tell cargo to invalidate the built crate whenever the wrapper changes
         println!("cargo:rerun-if-changed={}", src);
@@ -64,6 +59,7 @@ fn main() {
     println!("cargo:rerun-if-changed={}/{}", FAAD_INCLUDE_DIR, FAAD_INCLUDE);
 
     cc::Build::new()
+        .warnings(false)
         .files(sources())
         .include(FAAD_INCLUDE_DIR)
         .include(FAAD_SOURCE_DIR)
